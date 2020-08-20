@@ -20,8 +20,10 @@
         <h3></h3>
 
 
-<h4>cardList = [...]</h4>
+<h3>Card Logic</h3>
+
 <pre>
+cardList = [...]
 
 for i in ['a', 'b', 'c', 'd']:
   for j in range(7):
@@ -37,3 +39,16 @@ pl3 = cardList[19:29]
 pass = cardList[29:31]
 </pre>
 
+<h3>Game Logic</h3>
+
+<pre>
+
+  whoStarts({id:[card], id1:[card], id1:[card]}): return some_ID
+  
+  canSay(whatWant, currTurn=None): retur bool
+  
+  checkWin({id:card, id1:card, id2:card}): return Id
+  
+  score(talk, talker, )
+
+</pre>
