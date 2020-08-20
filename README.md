@@ -13,10 +13,3 @@
   <h3>1-7</h3>
   <h3>8-A</h3>
   
-class Game :
-  PlayerList: new Player[];
-class Player :
-  CartList: [... 'A1'];
-class Player: Bot
-  mrthode move();
-  
