@@ -21,7 +21,7 @@
 
 
 <h4>cardList = [...]</h4>
-<h5>
+<pre>
 
 for i in ['a', 'b', 'c', 'd']:
   for j in range(7):
@@ -35,5 +35,5 @@ pl1 = cardList[:9]
 pl2 = cardList[9:19]
 pl3 = cardList[19:29]
 pass = cardList[29:31]
-</h5>
+</pre>
 
