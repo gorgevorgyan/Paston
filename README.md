@@ -51,7 +51,7 @@ pass = cardList[29:31]
 <pre>
   
   Login & Register OK
-  Create OK
-  Find & Join Simple problem
+  Create room  OK
+  Find & Join room OK
   
 </pre>
