@@ -8,6 +8,21 @@ let Room = new Schema({
         type: String,
         default: ""
     },
+    gameState:{
+        type: String,
+        default: ""
+    },
+    currTalker:{
+        type: String,
+        default: ""
+    },
+    score: Array,
+    currPass: Array,
+    currTalk:{
+        type: String,
+        default: "" 
+    },
+    cardList:Array,
     private: Boolean,
     isStart:{
         type:Boolean,

@@ -16,9 +16,8 @@ io.of('/lobby').on('connection', async (socket) => {
     let join = socket => async _id => {
         let room = await Room.findOne({...{ _id }, isStart: false, private: false});
         
-
         let {user} = socket;
-        if(user.isPlay == true) return socket.emit('room', 'USER ERROR');
+        if(user.isPlay == true) return socket.emit('room', 'User already is in game');
 
         if(room == undefined) return socket.emit('room', 'your room undefine or Game started');
 
@@ -44,7 +43,7 @@ io.of('/lobby').on('connection', async (socket) => {
             io.of('/lobby').emit('roomList', await Room.find({}));
         }
         catch(error){
-            socket.emit('room', 'your room undefine or Game started');
+            socket.emit('room', 'your room undefined or Game started');
         }
     };
 
@@ -53,7 +52,7 @@ io.of('/lobby').on('connection', async (socket) => {
         let {user} = socket 
 
         let room = new Room({
-            UserList:[],
+            UserList:[user._id],
             Admin   : user._id,
             ...{private}
         });
