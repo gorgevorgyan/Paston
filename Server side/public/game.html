@@ -1,0 +1,18 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    const extraHeaders = {
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlJhbmciOjAsIlBsYXlDb3VudCI6MCwiV0wiOjAsImdvbGQiOjUsImNoaXAiOjYwMCwiaXNQbGF5IjpmYWxzZSwiRGF0YSI6IjIwMjAtMDgtMjFUMDk6MTk6MzAuNDY1WiIsIl9pZCI6IjVmM2Y5MjQ2MTZlYzAzMTJlYzdlOGVkNyIsIk5pY2tOYW1lIjoidGVzdDQiLCJQYXNzd29yZCI6ImNvZGUxMjM0IiwiX192IjowfSwiaWF0IjoxNTk4MDAxNzM0fQ.EYzFFo8HOIAfKRIpl7Y0VOlx871A6k-Oa_GsUCU2aGI',
+//      'auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7IlJhbmciOjAsIlBsYXlDb3VudCI6MCwiV0wiOjAsImdvbGQiOjUsImNoaXAiOjYwMCwiaXNQbGF5IjpmYWxzZSwiRGF0YSI6IjIwMjAtMDgtMjFUMDk6NDA6NDIuMTg0WiIsIl9pZCI6IjVmM2Y5NmQ4OWJkOTE2MGRjOGZjY2Y0ZCIsIk5pY2tOYW1lIjoidGVzdDUiLCJQYXNzd29yZCI6ImNvZGUxMjM0IiwiX192IjowfSwiaWF0IjoxNTk4MDAyOTA0fQ.QXaMMNXbZtPAehg9gFvQ6F0rOx0kK9wIhPKrvG2IeZM'
+        'room-key':''
+    };
+
+
+
+    const lobby = io('http://localhost:3001/lobby', {
+        transportOptions: {
+            polling: {  ...{ extraHeaders }}
+        }
+    });
+</script>

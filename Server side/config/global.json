@@ -1,0 +1,22 @@
+{   
+    "server":{
+        "port":3001,
+        "routerList":[
+            "auth.js", "room.js", "home.js", "game.js"
+        ]
+    },
+    "jwt":{
+        "privatKey":"tokenkey"
+    },
+    "session":{
+        "privatKey":"sesshonkey"
+    },
+    "mongo":{
+        "options":{
+            "useNewUrlParser"   : true,
+            "useUnifiedTopology": true,
+            "useFindAndModify"  : false 
+        },
+        "connectionURL": "mongodb+srv://sahak12:newdvbt2@cluster0.8lxiu.gcp.mongodb.net/pastonx?retryWrites=true&w=majority"
+    }
+}
