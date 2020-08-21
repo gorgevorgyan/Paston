@@ -48,10 +48,10 @@ pass = cardList[29:31]
 
 <h3>Our Problems</h3>
 
-<hre>
+<pre>
   
   Login & Register OK
   Create OK
   Find & Join Simple problem
   
-</hre>
+</pre>
