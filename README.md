@@ -45,3 +45,13 @@ pass = cardList[29:31]
   score(talk, talker, )
 
 </pre>
+
+<h3>Our Problems</h3>
+
+<hre>
+  
+  Login & Register OK
+  Create OK
+  Find & Join Simple problem
+  
+</hre>
