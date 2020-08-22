@@ -4,7 +4,7 @@
 
   <h3>  A-Ղառ♠️</h3>
   <h3>  B-Խաչ♣️</h3>
-  <h3 style="color: red;">  C-Քյափ</h3>
+  <h3 style="color: red;">  C-Քյափ♢</h3>
   <h3 style="color: red;">  D-Սիրտ❤️</h3>
 
 <h2>Խաղաքարտեր</h2>
