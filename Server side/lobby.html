@@ -1,0 +1,538 @@
+<html>
+    <head>
+        <title>Lobby</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+    <body>
+        <h1 id="lobbyId">Lobby</h1>
+        <h2 id="userScore"></h2>
+        <div id="pl1" style="position: absolute;bottom: 1%;right: 50%;">
+            <h3 id="pl1Name">Name1</h3>
+            <div id="pl1Status" style="background-color: red;width: 50px;height: 50px;"></div>
+            <div id="pl1State" style="background-color: green;width: 50px;height: 50px;"></div>
+            <div id="userCard" class="row"></div>
+            <button id="finishPass" onclick="finishingPass()" style="display: none;">Finish</button>
+        </div>
+
+        <div id="p2" style="position: absolute;right: 1%;">
+            <h3 id="pl2Name">Name2</h3>
+            <div id="pl2Status" style="background-color: red;width: 50px;height: 50px;"></div>
+            <div id="pl2State" style="background-color: red;width: 50px;height: 50px;"></div>
+        </div>
+
+        <div id="pl3" style="position: absolute;">
+            <h3 id="pl3Name">Name3</h3>
+            <div id="pl3Status" style="background-color: red;width: 50px;height: 50px;"></div>
+            <div id="pl3State" style="background-color: red;width: 50px;height: 50px;"></div>
+        </div>
+
+        <div class="row" style="display:none;position: absolute;right: 21%;top: 42%;" id="passCards"></div>
+
+        <div class="row" id="table" style="width: 450px;height: 250px;background-color: grey;position: absolute;right: 50%;top: 33%;">
+        
+            
+        </div>
+
+        <button style="display: none;" id="startModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Launch demo modal
+          </button>
+
+          <button style="display: none;" id="startPassion" type="button" class="btn btn-primary" data-toggle="modal" data-target="#passModal">
+            Launch demo modal
+          </button>
+
+          <button style="display: none;" id="startAfterPassion" type="button" class="btn btn-primary" data-toggle="modal" data-target="#passAfterModal">
+            Launch demo modal
+          </button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h3 id="sayInfo"></h3>
+          <input type="text" placeholder="must" id="spokenMust1">
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="sayingMust1()" class="btn btn-primary" data-dismiss="modal">Say</button>
+          <button type="button" onclick="sayingPass()" class="btn btn-primary" data-dismiss="modal">Pass</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h3 id="sayInfo"></h3>
+          <input type="text" placeholder="must" id="spokenMust">
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="sayingMust()" class="btn btn-primary" data-dismiss="modal">Say</button>
+          <button type="button" id='passLet' class="btn btn-primary" data-dismiss="modal">Let</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="passAfterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <h3 id="sayInfo"></h3>
+          <input type="text" placeholder="must" id="spokenMust2">
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="sayingMust2()" class="btn btn-primary" data-dismiss="modal">Set</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        <script>
+
+            var socket = io("https://pastonxs.herokuapp.com/");
+            var canPlay = 0;
+            const urlParams1 = new URLSearchParams(window.location.search);
+            var passChange = 0;
+            var currMust = 5; 
+
+            var userCardss = [];
+            var passCardss = [];
+            var tableCardss = [];
+            var whoCanPlay;
+
+            document.getElementById("pl1Name").innerHTML = urlParams1.get('uid');
+            document.getElementById("lobbyId").innerHTML = "Lobby  " + urlParams1.get('roomId');
+            /*$(function () {
+                
+                $('form').submit(function(){
+                    socket.emit('chat message', $('#m').val());
+                    $('#m').val('');
+                    return false;
+                });
+                socket.on('chat message', function(msg){
+                    $('#messages').append($('<li>').text(msg));
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
+            });*/
+
+            socket.on('roomUpdate', function(msg){
+                console.log(msg)
+                if(msg.roomID == urlParams1.get('rid')){
+                    try{
+                        if(msg.info[0].UserList.indexOf(urlParams1.get('uid')) == 0 && msg.info[0].UserList[1] != undefined){
+                            document.getElementById("pl3Name").innerHTML = msg.info[0].UserList[1]
+                            document.getElementById("pl3State").style.backgroundColor = "green"
+                        }
+                        else if(msg.info[0].UserList.indexOf(urlParams1.get('uid')) == 1 && msg.info[0].UserList[1] != undefined){
+                            document.getElementById("pl3Name").innerHTML = msg.info[0].UserList[0]
+                            document.getElementById("pl3State").style.backgroundColor = "green"
+                        }
+                        else if(msg.info[0].UserList.indexOf(urlParams1.get('uid')) == 2 && msg.info[0].UserList[0] != undefined){
+                            document.getElementById("pl2Name").innerHTML = msg.info[0].UserList[0]
+                            document.getElementById("pl2State").style.backgroundColor = "green"
+                        }
+                        else{
+                            console.log("SMTH is wrong")
+                        }
+                    }
+                    catch(e){console.log(e)}
+                    try{
+                        console.log(msg.info[0].UserList.indexOf(urlParams1.get('uid')))
+                        if(msg.info[0].UserList.indexOf(urlParams1.get('uid')) == 0 && msg.info[0].UserList[2] != undefined){
+                            document.getElementById("pl2Name").innerHTML = msg.info[0].UserList[2]
+                            document.getElementById("pl2State").style.backgroundColor = "green"
+                        }
+                        else if(msg.info[0].UserList.indexOf(urlParams1.get('uid')) == 1 && msg.info[0].UserList[2] != undefined){
+                            document.getElementById("pl2Name").innerHTML = msg.info[0].UserList[2]
+                            document.getElementById("pl2State").style.backgroundColor = "green"
+                        }
+                        
+                        else if(msg.info[0].UserList.indexOf(urlParams1.get('uid')) == 2 && msg.info[0].UserList[1] != undefined){
+                            document.getElementById("pl3Name").innerHTML = msg.info[0].UserList[1]
+                            document.getElementById("pl3State").style.backgroundColor = "green"
+                        }
+                        else{
+                            console.log("SMTH is wrong1")
+                        }
+                    }
+                    catch(e){console.log(e)}
+                }
+            });
+
+            socket.on('gameStart', function(msg){ 
+                console.log(msg)
+                if(msg.roomID == urlParams1.get('rid')){ 
+                    try{document.getElementById("userScore").innerHTML = msg.score[0] + "  " +  msg.score[1] + "  " +  msg.score[2]}
+                    catch(e){document.getElementById("userScore").innerHTML = "Error"}
+                    passCardss = []
+                    userCardss = []
+                    tableCardss = []
+                    createCards(msg)
+                    document.getElementById("table").innerHTML = "";
+                    document.getElementById("passCards").innerHTML = "";
+                    createTableCards()
+                    createPassCards(msg)
+
+                    if(msg.roomInfo[0].UserList[msg.starter] == urlParams1.get('uid')){
+                        game(msg.roomInfo[0].UserList[msg.starter])
+                        document.getElementById("pl1Status").style.backgroundColor = "yellow";
+                    }
+                    else{
+                        console.log(document.getElementById("pl2Name").innerHTML, msg.roomInfo[0].UserList[msg.starter]);
+                        if(document.getElementById("pl2Name").innerHTML == msg.roomInfo[0].UserList[msg.starter]){
+                            console.log("a")
+                            document.getElementById("pl2Status").style.backgroundColor = "yellow";
+                        }
+                        else if(document.getElementById("pl3Name").innerHTML == msg.roomInfo[0].UserList[msg.starter]){
+                            console.log("b")
+                            document.getElementById("pl3Status").style.backgroundColor = "yellow";
+                        }
+                        //alert("STARTING " + msg.roomInfo[0].UserList[msg.starter]);
+                    }
+                }
+             });
+
+             socket.on('ano ther', function(msg){ 
+                console.log(msg)
+                console.log(msg);
+                if(msg.roomID == urlParams1.get('rid')){
+                    if(urlParams1.get('uid') != msg.who){
+                        console.log("I`m here bro")
+                        //var letPass = confirm(msg.who + "  wants pass");
+                        //var letPass = true;
+                        document.getElementById("startPassion").click()
+                        
+    
+                            document.getElementById("passLet").addEventListener("click", function(){
+                                function a(){socket.emit("passInfo", {"roomID" : urlParams1.get('rid'), "answer" : true, "by" : urlParams1.get('uid'), "talker" : msg.talker})}
+                                if(urlParams1.get('uid') == "5f416e594e7cc738d03083a9") setTimeout(a, 100)
+                                else if(urlParams1.get('uid') == "5f421d80820a8442bc3d94f3") setTimeout(a, 900)
+                                else if(urlParams1.get('uid') == "5f4113b9bc31f6193c3b5914") setTimeout(a, 1500)
+                            });
+                        
+                        
+                    }
+                 }
+            });
+             
+            socket.on('letedPass', function(msg){
+                console.log(msg)
+                if(msg.roomID == urlParams1.get('rid') && msg.talker == urlParams1.get('uid')){
+                    if(parseInt(msg.backAnswer)){
+                        document.getElementById("passCards").style.display = "block";
+                        document.getElementById("finishPass").style.display = "block";
+                        passChange = 1;
+                    }
+                }
+            });
+
+            socket.on('sayBack', function(msg){ 
+                if(msg.roomID = urlParams1.get('rid')){
+                    if(urlParams1.get('uid') != msg.block){
+                        document.getElementById("sayInfo").innerHTML = msg.block +  "  Says  "  + msg.must
+                        currMust = msg.must
+                        document.getElementById("startModal").click();
+                    }
+                }
+             });
+
+             socket.on('canPlay', function(msg){ 
+
+                 if(msg.roomID == urlParams1.get('rid')){
+                     whoCanPlay = msg.who
+                     if(urlParams1.get('uid') == msg.who){
+                        document.getElementById("pl1Status").style.backgroundColor = "green";
+                        document.getElementById("pl2Status").style.backgroundColor = "red";
+                        document.getElementById("pl3Status").style.backgroundColor = "red";
+                     }
+                     else if(document.getElementById("pl2Name").innerHTML == msg.who){
+                        document.getElementById("pl2Status").style.backgroundColor = "green";
+                        document.getElementById("pl3Status").style.backgroundColor = "red";
+                        document.getElementById("pl1Status").style.backgroundColor = "red";
+                     }
+                     else if(document.getElementById("pl3Name").innerHTML == msg.who){
+                        document.getElementById("pl3Status").style.backgroundColor = "green";
+                        document.getElementById("pl2Status").style.backgroundColor = "red";
+                        document.getElementById("pl1Status").style.backgroundColor = "red";
+                     }else console.log("find that error")
+                     try{
+                        if(msg.clear){
+                            tableCardss = [];
+                            document.getElementById("table").innerHTML = "";
+                            createTableCards()
+                        }
+                     }
+                     catch(e){console.log(e)}
+                     try{
+                         if(msg.table){
+                            tableCardss = msg.tableCards
+                            document.getElementById("table").innerHTML = "";
+                            createTableCards()
+                         }
+
+                     }
+                     catch(e){console.log(e)}
+                }
+                    
+              });
+
+              /* letingPass(){
+                function a(){socket.emit("passInfo", {"roomID" : urlParams1.get('rid'), "answer" : true, "by" : urlParams1.get('uid'), "talker" : msg.talker})}
+                if(urlParams1.get('uid') == "5f416e594e7cc738d03083a9") setTimeout(a, 100)
+                else if(urlParams1.get('uid') == "5f421d80820a8442bc3d94f3") setTimeout(a, 900)
+                else if(urlParams1.get('uid') == "5f4113b9bc31f6193c3b5914") setTimeout(a, 1500)
+              }*/
+
+             function sayingPass(){
+                 socket.emit("passSay", {"roomID": urlParams1.get('rid'), who : urlParams1.get('uid'), "player" : document.getElementById("sayInfo").innerHTML.split(" ")[0],  "what" : document.getElementById("sayInfo").innerHTML.split(" ")[4]})
+             }
+
+            function sayingMust(){
+                if(parseInt(document.getElementById("spokenMust").value) == 1){
+
+                }
+                else{
+                    socket.emit('sayMust', {roomID : urlParams1.get('rid'), who : urlParams1.get('uid'), "must" : parseInt(document.getElementById("spokenMust").value)})
+                }
+                
+            }
+            function sayingMust2(){
+                socket.emit('sayMustWB', {roomID : urlParams1.get('rid'), who : urlParams1.get('uid'), "must" : parseInt(document.getElementById("spokenMust2").value)})
+            }
+            function sayingMust1(){
+                if(parseInt(document.getElementById("spokenMust").value) == 1){
+
+                }
+                else{
+                    socket.emit('sayMust', {roomID : urlParams1.get('rid'), who : urlParams1.get('uid'), "must" : parseInt(document.getElementById("spokenMust1").value)})
+                }
+                
+            }
+
+            function delAr(arr, index){
+                var newArr = []
+                for(let i in arr){
+                    if(i != index){
+                        newArr.push(arr[i])
+                    }
+                }
+                return newArr
+
+            }
+
+            function game(starter){
+                 //var wantPass = confirm("You are starting \n If you want pass select OK")
+                 if(1){
+                    socket.emit("wantPass", {"roomID" : urlParams1.get('rid'), "who" : starter, "talker" : urlParams1.get('uid')});
+                 }
+             }
+
+             function finishingPass(){
+                 document.getElementById("finishPass").style.display = "none";
+                 document.getElementById("passCards").style.display = "none";
+                 passChange = 0;
+                document.getElementById("startAfterPassion").click()
+                 //document.getElementById("startModal").click()
+             }
+
+             function createCards(msg, globalGet=false){
+                 if(!globalGet){
+                    for(let cards in msg.userCards[msg.roomInfo[0].UserList.indexOf(urlParams1.get('uid'))]){
+
+                        var cardDiv = document.createElement("DIV");
+                        var splitDiv = document.createElement("DIV");
+
+                        cardDiv.innerHTML = msg.userCards[msg.roomInfo[0].UserList.indexOf(urlParams1.get('uid'))][cards];
+                        cardDiv.className = "col-6 col-md-1"
+                        cardDiv.style.backgroundColor = "greenyellow"
+                        cardDiv.id = "card" + cards
+                        cardDiv.value =  msg.userCards[msg.roomInfo[0].UserList.indexOf(urlParams1.get('uid'))][cards]
+                        userCardss.push(msg.userCards[msg.roomInfo[0].UserList.indexOf(urlParams1.get('uid'))][cards])
+                        cardDiv.onclick = function(){
+                                if(passChange){
+                                    passCardss.push(this.value)
+                                    userCardss = delAr(userCardss, parseInt(this.id[this.id.length-1]))
+                                    document.getElementById("passCards").innerHTML = "";
+                                    document.getElementById("userCard").innerHTML = "";
+                                    document.getElementById("passCards").innerHTML = "";
+                                    createPassCards("a", true)
+                                    createCards('a', true)
+                                }
+                                else if(whoCanPlay == urlParams1.get('uid')){
+                                    userCardss = delAr(userCardss, parseInt(this.id[this.id.length-1]))
+                                    tableCardss.push(this.value)
+                                    document.getElementById("userCard").innerHTML = "";
+                                    document.getElementById("table").innerHTML = "";
+                                    createTableCards()
+                                    createCards("a", true)
+                                    socket.emit("cardAddTable", {"roomID" : urlParams1.get('rid'), "player" : urlParams1.get('uid'), "card" : this.value})
+                                    document.getElementById("pl1Status").style.backgroundColor = "red";
+                                }
+                            }
+                        //userCardss.push(msg.userCards[msg.roomInfo[0].UserList.indexOf(urlParams1.get('uid'))][cards]);
+                        splitDiv.style.width = "10px";
+
+                        document.getElementById("userCard").appendChild(cardDiv);
+                        document.getElementById("userCard").appendChild(splitDiv);
+
+                        }
+                    }
+                    else{
+                        for(let cards in userCardss){
+
+                            var cardDiv = document.createElement("DIV");
+                            var splitDiv = document.createElement("DIV");
+
+                            cardDiv.innerHTML = userCardss[cards];
+                            cardDiv.className = "col-6 col-md-1"
+                            cardDiv.style.backgroundColor = "greenyellow"
+                            cardDiv.id = "card" + cards
+                            cardDiv.value =  userCardss[cards]
+                            cardDiv.onclick = function(){
+                                    if(passChange){
+                                        passCardss.push(this.value)
+                                        //userCardss.splice(parseInt(this.id[this.id.length-1]) , parseInt(this.id[this.id.length-1]))
+                                        userCardss = delAr(userCardss, parseInt(this.id[this.id.length-1]))
+                                        document.getElementById("passCards").innerHTML = "";
+                                        document.getElementById("userCard").innerHTML = "";
+                                        document.getElementById("passCards").innerHTML = "";
+                                        createPassCards("a",true)
+                                        createCards('a', true)
+                                    }
+                                    else if(whoCanPlay == urlParams1.get('uid')){
+                                        userCardss = delAr(userCardss, parseInt(this.id[this.id.length-1]))
+                                        tableCardss.push(this.value)
+                                        document.getElementById("table").innerHTML = "";
+                                        createTableCards()
+                                        document.getElementById("userCard").innerHTML = "";
+                                        createCards('a', true)
+                                        socket.emit("cardAddTable", {"roomID" : urlParams1.get('rid'), "player" : urlParams1.get('uid'), "card" : this.value})
+                                        document.getElementById("pl1Status").style.backgroundColor = "red";
+                                    }
+                                }
+                            //userCardss.push(userCardss[cards]);
+                            splitDiv.style.width = "10px";
+
+                            document.getElementById("userCard").appendChild(cardDiv);
+                            document.getElementById("userCard").appendChild(splitDiv);
+
+                            }
+                    }
+             }
+
+             function createPassCards(msg, globalGet=false){
+                 if(globalGet){
+                    for(let n in passCardss){
+                            var cardDiv = document.createElement("DIV");
+                            var splitDiv = document.createElement("DIV");
+
+                            cardDiv.innerHTML = passCardss[n];
+                            cardDiv.className = "col-6 col-md-1"
+                            cardDiv.style.backgroundColor = "purple"
+                            cardDiv.id = "card" + n
+                            cardDiv.value =  passCardss[n];
+                            cardDiv.onclick = function(){
+                                if(passChange){
+                                    userCardss.push(this.value)
+                                    passCardss.splice(parseInt(this.id[this.id.length-1]) , parseInt(this.id[this.id.length-1]))
+                                    passCardss = delAr(passCardss, parseInt(this.id[this.id.length-1]))
+                                    document.getElementById("userCard").innerHTML = "";
+                                    document.getElementById("passCards").innerHTML = "";
+                                    createPassCards("a", true)
+                                    createCards("a", true)
+                                }
+                                        
+                            }
+
+                            splitDiv.style.width = "10px";
+
+                            document.getElementById("passCards").appendChild(cardDiv);
+                            document.getElementById("passCards").appendChild(splitDiv);
+                        }
+                 }
+                 else{
+                    for(let n = 0; n < 2; n++){
+                            var cardDiv = document.createElement("DIV");
+                            var splitDiv = document.createElement("DIV");
+
+                            cardDiv.innerHTML = msg.userCards[3][n];
+                            cardDiv.className = "col-6 col-md-1"
+                            cardDiv.style.backgroundColor = "purple"
+                            cardDiv.id = "card" + n
+                            cardDiv.value =  msg.userCards[3][n];
+                            passCardss.push(msg.userCards[3][n])
+                            cardDiv.onclick = function(){
+                                if(passChange){
+                                    userCardss.push(this.value)
+                                    //passCardss.splice(parseInt(this.id[this.id.length-1]) , parseInt(this.id[this.id.length-1]))
+                                    passCardss = delAr(passCardss, parseInt(this.id[this.id.length-1]))
+                                    document.getElementById("userCard").innerHTML = "";
+                                    document.getElementById("passCards").innerHTML = "";
+                                    createPassCards("a", true)
+                                    createCards("a", true)
+                                }
+                                   
+                            }
+
+                            splitDiv.style.width = "10px";
+
+                            document.getElementById("passCards").appendChild(cardDiv);
+                            document.getElementById("passCards").appendChild(splitDiv);
+                        }
+                 }
+             }
+
+             function createTableCards(){
+                 for(let card in tableCardss){
+                    var cardDiv = document.createElement("DIV");
+                    var splitDiv = document.createElement("DIV");
+
+                    cardDiv.innerHTML = tableCardss[card];
+                    cardDiv.className = "col-6 col-md-1"
+                    cardDiv.style.backgroundColor = "#00ffd7"
+                    cardDiv.id = "card" + card
+                    cardDiv.value =  tableCardss[card];
+
+                    splitDiv.style.width = "65px";
+
+                    document.getElementById("table").appendChild(cardDiv);
+                    document.getElementById("table").appendChild(splitDiv);
+                 }
+             }
+
+        </script>
+
+        <style>
+
+        </style>
+
+    </body>
+</html>

@@ -1,9 +1,11 @@
 
 function whoStarts(users){  //Checks who is starting
 
-    for (let ids in users){
-        for (let cards in usres[ids]){
-            if(cards.includes("a5")) return ids  //Retures user id
+    for(let i in users){
+        for(let j in i){
+            if(users[i][j] == 'a5'){
+                return i
+            }
         }
     }
 
@@ -106,7 +108,7 @@ function getCards(){
     return sendList;
 }
 
-console.log(getCards())
+console.log(whoStarts([['a1' , 'a2'], ['a3'], ['a5']]))
 
 module.exports = {
     ...{score}, ...{checkWin}, ...{canSay}, ...{whoStarts}
